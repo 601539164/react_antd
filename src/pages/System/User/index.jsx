@@ -109,7 +109,7 @@ const User = () => {
   ]
   // 表格请求参数
   const [requestParam, setRequestParam] = useState({
-    pageSize: 5,
+    pageSize: 10,
     current: 1
   })
   // 选择用户

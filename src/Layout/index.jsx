@@ -160,79 +160,85 @@ const LayoutApp = () => {
   // debugger
   return (
     <Layout className="layout">
-      <Sider trigger={null} collapsible collapsed={collapsed} theme={themeVari}>
+      <Header className="headerStyle" style={{ backgroundColor: themeVari === 'dark' ? '#001529' : '#409eff' }}>
         <div className="layout-logo-vertical" style={{ color: themeVari === 'dark' ? '#fff' : '#000' }}>
           <span className="layout-logo">
             <DashboardFilled />
           </span>
-          {!collapsed && <span>react-antd5-admin</span>}
+          <span>react-antd5-admin</span>
         </div>
-        <Switch
-          className="sider-switch"
-          checkedChildren="☀"
-          unCheckedChildren="🌙"
-          onChange={changeTheme}
-          style={{ transform: collapsed ? 'translateX(15px)' : 'translateX(75px)' }}
-        />
-        <Menu
-          theme={themeVari}
-          mode="inline"
-          selectedKeys={[pathname]}
-          openKeys={subMenuKeys}
-          onOpenChange={handleMenuOpen}
-          items={menuItems}
-          onClick={handleMenuClick}
-        />
-      </Sider>
+        <div className="header-right">
+          <Switch
+            className="sider-switch"
+            checkedChildren="☀"
+            unCheckedChildren="🌙"
+            onChange={changeTheme}
+          />
+          <Dropdown menu={{ items: dropdownMenuItems }} placement="bottomRight">
+            <Space>
+              <img
+                src={avatar || require('@/assets/images/avatar/default_avatar.jpg')}
+                className="user-icon"
+                alt="avatar"
+              />
+              <DownOutlined />
+            </Space>
+          </Dropdown>
+        </div>
+      </Header>
       <Layout>
-        <Header
-          style={{
-            padding: 0,
-            background: colorBgContainer,
-            display: 'flex'
-          }}>
+        <Sider trigger={null} collapsible collapsed={collapsed} theme={themeVari}>
           <Button
             type="text"
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
             onClick={() => setCollapsed(!collapsed)}
             style={{
               fontSize: '16px',
-              width: 64,
-              height: 64
+              width: '100%',
+              height: 64,
+              padding: 10,
+              color: themeVari === 'dark' ? '#fff' : '#000',
+              textAlign: collapsed ? 'center' : 'right'
             }}
           />
-          <div className="header-breadcrumb">
-            <Breadcrumb items={breadcrumbItems} />
-          </div>
-          <div className="header-right">
-            <Dropdown menu={{ items: dropdownMenuItems }} placement="bottomRight">
-              <Space>
-                <img
-                  src={avatar || require('@/assets/images/avatar/default_avatar.jpg')}
-                  className="user-icon"
-                  alt="avatar"
-                />
-                <DownOutlined />
-              </Space>
-            </Dropdown>
-          </div>
-        </Header>
-        <Content
-          style={{
-            // padding: 24,
-            minHeight: 280
-            // background: colorBgContainer
-          }}>
-          <TabsView pathname={pathname} formatRoutes={formatRoutes} selectTab={selectTab} />
-        </Content>
+          <Menu
+            theme={themeVari}
+            mode="inline"
+            selectedKeys={[pathname]}
+            openKeys={subMenuKeys}
+            onOpenChange={handleMenuOpen}
+            items={menuItems}
+            onClick={handleMenuClick}
+          />
+        </Sider>
+        <Layout>
+          <Header
+            style={{
+              padding: 0,
+              background: colorBgContainer
+            }}>
+            {/* <div className="header-breadcrumb">
+              <Breadcrumb items={breadcrumbItems} />
+            </div> */}
+            <TabsView pathname={pathname} formatRoutes={formatRoutes} selectTab={selectTab} />
+          </Header>
+          <Content
+            className="content"
+            style={{
+              // padding: 24,
+              minHeight: 280,
+              // background: colorBgContainer
+            }}>
+          </Content>
+        </Layout>
+        <CustomModal title="个人中心" ref={userCenterRef}>
+          <UserCenterForm toggleCenterStatus={toggleCenterStatus} />
+        </CustomModal>
+        <CustomModal title="重置密码" ref={resetPwdRef}>
+          <ResetPwdForm toggleResetStatus={toggleResetStatus} />
+        </CustomModal>
       </Layout>
-      <CustomModal title="个人中心" ref={userCenterRef}>
-        <UserCenterForm toggleCenterStatus={toggleCenterStatus} />
-      </CustomModal>
-      <CustomModal title="重置密码" ref={resetPwdRef}>
-        <ResetPwdForm toggleResetStatus={toggleResetStatus} />
-      </CustomModal>
-    </Layout>
+    </Layout >
   )
 }
 export default LayoutApp
