@@ -1,7 +1,7 @@
 import React, { useState, useImperativeHandle, forwardRef } from 'react'
 import { Modal } from 'antd'
 // forwardRef : 传递弹窗组件的ref
-const CustomModal = forwardRef(({ title, children }, ref) => {
+const CustomModal = forwardRef(({ title, width = 520, children }, ref) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   // 取消事件
   const handleCancel = () => {
@@ -20,7 +20,7 @@ const CustomModal = forwardRef(({ title, children }, ref) => {
   )
 
   return (
-    <Modal title={title} open={isModalOpen} footer={null} onCancel={handleCancel}>
+    <Modal title={title} width={width} open={isModalOpen} footer={null} onCancel={handleCancel}>
       {children}
     </Modal>
   )
